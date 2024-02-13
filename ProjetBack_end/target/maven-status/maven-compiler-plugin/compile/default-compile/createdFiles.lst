@@ -1,0 +1,9 @@
+films\Films.class
+clients\ClientManager.class
+clients\Clients.class
+com\mycompany\projetback_end\JakartaRestConfiguration.class
+CorsHandling\CorsFilter.class
+test\ServletUserInfo.class
+com\mycompany\projetback_end\resources\JakartaEE10Resource.class
+connexion\Server.class
+films\ManagerFilms.class

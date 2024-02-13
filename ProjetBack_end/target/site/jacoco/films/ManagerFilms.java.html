@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ManagerFilms.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ProjetBack_end-1.0-SNAPSHOT</a> &gt; <a href="index.source.html" class="el_package">films</a> &gt; <span class="el_source">ManagerFilms.java</span></div><h1>ManagerFilms.java</h1><pre class="source lang-java linenums">/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package films;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import connexion.Server;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ * 
+ *
+ * @author isi
+ */
+
+
+<span class="nc" id="L22">public class ManagerFilms {</span>
+/*
+recup_film() retourn tous les films de la bd
+film_louer() retourne un boolean et ajoute a la base de donnée
+louer le user_id et film_id de l'utilisateur qui a louer le film
+*/
+    public static ArrayList&lt;Films&gt; recup_film() {
+<span class="nc" id="L29">        ArrayList&lt;Films&gt; films = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L30">        String query = &quot;SELECT * FROM films_bd&quot;;</span>
+<span class="nc" id="L31">        PreparedStatement preparedStatement = Server.connexion(query);</span>
+         
+        try {
+<span class="nc" id="L34">            ResultSet resultSet = preparedStatement.executeQuery();</span>
+<span class="nc bnc" id="L35" title="All 2 branches missed.">            while (resultSet.next()) {</span>
+<span class="nc" id="L36">                Films film = new Films();</span>
+<span class="nc" id="L37">                film.setId(resultSet.getString(&quot;id&quot;));</span>
+<span class="nc" id="L38">                film.setTitre(resultSet.getString(&quot;titre&quot;));</span>
+<span class="nc" id="L39">                film.setAnnee(resultSet.getString(&quot;annee&quot;));</span>
+<span class="nc" id="L40">                film.setPays(resultSet.getString(&quot;pays&quot;));</span>
+<span class="nc" id="L41">                film.setLangue(resultSet.getString(&quot;langue&quot;));</span>
+<span class="nc" id="L42">                film.setDuree(resultSet.getInt(&quot;duree&quot;));</span>
+<span class="nc" id="L43">                film.setResume(resultSet.getString(&quot;resume&quot;));</span>
+<span class="nc" id="L44">                film.setGenre(resultSet.getString(&quot;genre&quot;));</span>
+<span class="nc" id="L45">                film.setRealisateur(resultSet.getString(&quot;realisateur&quot;));</span>
+<span class="nc" id="L46">                film.setScenariste(resultSet.getString(&quot;scenariste&quot;));</span>
+<span class="nc" id="L47">                film.setActeur(resultSet.getString(&quot;acteur&quot;));</span>
+<span class="nc" id="L48">                film.setPoster(resultSet.getString(&quot;poster&quot;));</span>
+<span class="nc" id="L49">                film.setAnnonce(resultSet.getString(&quot;annonce&quot;));</span>
+<span class="nc" id="L50">                films.add(film);</span>
+<span class="nc" id="L51">            }</span>
+       
+<span class="nc" id="L53">        } catch (SQLException e) {</span>
+<span class="nc" id="L54">            e.printStackTrace();</span>
+        } finally {
+<span class="nc" id="L56">            Server.fermer();</span>
+        }
+<span class="nc" id="L58">        return films;</span>
+    }
+    
+    public static boolean film_louer(String id_film, String id_client) {
+<span class="nc" id="L62">        String selectSql = &quot;SELECT COUNT(*) AS nb_films FROM louer WHERE id_client = ?&quot;;</span>
+<span class="nc" id="L63">        String insertSql = &quot;INSERT INTO louer (id_film, id_client) VALUES (?, ?)&quot;;</span>
+ 
+        try {
+<span class="nc" id="L66">            PreparedStatement selectStatement = Server.connexion(selectSql);</span>
+<span class="nc" id="L67">            selectStatement.setString(1, id_client);</span>
+<span class="nc" id="L68">            ResultSet resultSet = selectStatement.executeQuery();</span>
+ 
+<span class="nc" id="L70">            resultSet.next();</span>
+<span class="nc" id="L71">            int count = resultSet.getInt(&quot;nb_films&quot;);</span>
+ 
+<span class="nc bnc" id="L73" title="All 2 branches missed.">            if (count == 0) {</span>
+<span class="nc" id="L74">                PreparedStatement insertStatement = Server.connexion(insertSql);</span>
+<span class="nc" id="L75">                insertStatement.setString(1, id_film);</span>
+<span class="nc" id="L76">                insertStatement.setString(2, id_client);</span>
+<span class="nc" id="L77">                insertStatement.executeUpdate();</span>
+<span class="nc" id="L78">            } else {</span>
+<span class="nc" id="L79">                return false;</span>
+            }
+ 
+<span class="nc" id="L82">        } catch (SQLException e) {</span>
+<span class="nc" id="L83">            e.printStackTrace();</span>
+<span class="nc" id="L84">            return false;</span>
+<span class="nc" id="L85">        }</span>
+ 
+<span class="nc" id="L87">        return true;</span>
+    }
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

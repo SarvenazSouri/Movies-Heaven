@@ -1,0 +1,10 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+ProjetBack_end-1.0-SNAPSHOT,films,ManagerFilms,146,0,4,0,45,0,5,0,3,0
+ProjetBack_end-1.0-SNAPSHOT,films,Films,165,0,0,0,42,0,28,0,28,0
+ProjetBack_end-1.0-SNAPSHOT,clients,Clients,260,0,36,0,87,0,52,0,34,0
+ProjetBack_end-1.0-SNAPSHOT,clients,ClientManager,145,0,2,0,40,0,4,0,3,0
+ProjetBack_end-1.0-SNAPSHOT,test,ServletUserInfo,232,0,20,0,60,0,18,0,8,0
+ProjetBack_end-1.0-SNAPSHOT,com.mycompany.projetback_end,JakartaRestConfiguration,3,0,0,0,1,0,1,0,1,0
+ProjetBack_end-1.0-SNAPSHOT,CorsHandling,CorsFilter,26,0,0,0,7,0,2,0,2,0
+ProjetBack_end-1.0-SNAPSHOT,com.mycompany.projetback_end.resources,JakartaEE10Resource,7,0,0,0,4,0,2,0,2,0
+ProjetBack_end-1.0-SNAPSHOT,connexion,Server,45,0,2,0,19,0,6,0,5,0

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ClientManager.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ProjetBack_end-1.0-SNAPSHOT</a> &gt; <a href="index.source.html" class="el_package">clients</a> &gt; <span class="el_source">ClientManager.java</span></div><h1>ClientManager.java</h1><pre class="source lang-java linenums">/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package clients;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import connexion.Server;
+import java.util.Random;
+
+
+/**
+ *
+ * @author isi
+ */
+<span class="nc" id="L20">public class ClientManager {</span>
+    public static Clients trouver_utilisateur(String email,String pws){
+        
+<span class="nc" id="L23">            Clients user = null;</span>
+<span class="nc" id="L24">            String s = &quot;&quot;;</span>
+<span class="nc" id="L25">	    String query = &quot;select * from clients_bd where courriel = '&quot;+email+&quot;' and password = '&quot;+pws+&quot;'&quot;;</span>
+<span class="nc" id="L26">            PreparedStatement preparedStatement = Server.connexion(query);   </span>
+            try  {
+<span class="nc" id="L28">            ResultSet resultSet = preparedStatement.executeQuery();</span>
+<span class="nc" id="L29">            user = new Clients();</span>
+<span class="nc bnc" id="L30" title="All 2 branches missed.">            while (resultSet.next()) {</span>
+            
+<span class="nc" id="L32">                user.setId(resultSet.getString(&quot;id&quot;));</span>
+<span class="nc" id="L33">                user.setNom(resultSet.getString(&quot;nom&quot;));</span>
+<span class="nc" id="L34">                user.setPrenom(resultSet.getString(&quot;prenom&quot;));</span>
+<span class="nc" id="L35">                user.setCourriel(resultSet.getString(&quot;courriel&quot;));</span>
+<span class="nc" id="L36">                user.setTel(resultSet.getString(&quot;tel&quot;));</span>
+<span class="nc" id="L37">                user.setAnniversaire(resultSet.getString(&quot;anniversaire&quot;));</span>
+<span class="nc" id="L38">                user.setAdresse(resultSet.getString(&quot;adresse&quot;));</span>
+<span class="nc" id="L39">                user.setVille(resultSet.getString(&quot;province&quot;));/*-------------*/</span>
+<span class="nc" id="L40">                user.setProvince(resultSet.getString(&quot;province&quot;));</span>
+<span class="nc" id="L41">                user.setCode_postal(resultSet.getString(&quot;code_postal&quot;));</span>
+<span class="nc" id="L42">                user.setCarte(resultSet.getString(&quot;carte&quot;));</span>
+<span class="nc" id="L43">                user.setNo_carte(resultSet.getString(&quot;no_carte&quot;));</span>
+<span class="nc" id="L44">                user.setExp_mois(resultSet.getString(&quot;exp_mois&quot;));</span>
+<span class="nc" id="L45">                user.setExp_annee(resultSet.getString(&quot;exp_annee&quot;));</span>
+<span class="nc" id="L46">                user.setPassword(resultSet.getString(&quot;password&quot;));</span>
+<span class="nc" id="L47">                user.setForfait(resultSet.getString(&quot;forfait&quot;));</span>
+            }
+                
+<span class="nc" id="L50">            } catch (SQLException e) {</span>
+<span class="nc" id="L51">            e.printStackTrace();</span>
+<span class="nc" id="L52">        }</span>
+<span class="nc" id="L53">            return user;</span>
+    }
+    
+    public static void createUser(String email, String password) {
+<span class="nc" id="L57">    String query = &quot;INSERT INTO clients_bd (id, courriel, password) VALUES (?, ?, ?)&quot;;</span>
+<span class="nc" id="L58">    PreparedStatement preparedStatement = Server.connexion(query);</span>
+    
+    try{
+<span class="nc" id="L61">        Random rand = new Random(); </span>
+<span class="nc" id="L62">        int int_random = rand.nextInt(100000000); </span>
+<span class="nc" id="L63">        preparedStatement.setString(1, int_random+&quot;&quot;);</span>
+<span class="nc" id="L64">        preparedStatement.setString(2, email);</span>
+<span class="nc" id="L65">        preparedStatement.setString(3, password);</span>
+        
+
+<span class="nc" id="L68">       preparedStatement.executeUpdate();</span>
+
+
+<span class="nc" id="L71">    } catch (SQLException e) {</span>
+<span class="nc" id="L72">        e.printStackTrace();</span>
+<span class="nc" id="L73">    }</span>
+<span class="nc" id="L74">}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
